@@ -1,0 +1,28 @@
+{
+  "name": "express-inversify-example",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "ts-node app.ts"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "helmet": "^7.0.0",
+    "inversify": "^6.0.1",
+    "inversify-express-utils": "^6.4.3",
+    "inversify-logger-middleware": "^3.1.0",
+    "morgan": "~1.9.1",
+    "pg": "^8.11.3",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.2",
+    "@types/express": "^4.17.17",
+    "@types/helmet": "^4.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
