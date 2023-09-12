@@ -2,15 +2,26 @@ import 'reflect-metadata';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { Container } from 'inversify';
 
-import './controller/todo';
+import './ioc';
 import { bindings } from "./inversify.config";
+import bodyParser from "body-parser";
+import {buildProviderModule} from "inversify-binding-decorators";
 
 (async ()=> {
    const port = 3000;
    const container = new Container();
    await container.loadAsync(bindings);
+   container.load(buildProviderModule());
    const app = new InversifyExpressServer(container);
    const server = app.build();
+
+   app.setConfig((theApp) => {
+      theApp.use(bodyParser.urlencoded({
+         extended: true
+      }));
+      theApp.use(bodyParser.json());
+      // theApp.use(helmet());
+   });
 
    server.listen(port,()=>{
        console.log(`Server running at http://127.0.0.1:${port}/`)

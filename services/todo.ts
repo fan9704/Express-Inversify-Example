@@ -1,4 +1,8 @@
-import { injectable } from 'inversify';
+import {inject} from 'inversify';
+import {TYPES} from "../constant/types";
+import { provide } from 'inversify-binding-decorators';
+import {Repository} from "typeorm";
+import {Todo} from "../entities/todo";
 
 export interface ITodo {
     id: String,
@@ -6,7 +10,7 @@ export interface ITodo {
     complete: boolean;
 }
 
-@injectable()
+@provide(TYPES.TodoService)
 export class TodoService {
 
     private todoStorage: ITodo  [] = [{
@@ -18,9 +22,14 @@ export class TodoService {
         description:"Camping",
         complete:false
     }];
-
-    public getTodos(): ITodo[] {
-        return this.todoStorage;
+    private repository:Repository<Todo>;
+    constructor(
+        @inject(TYPES.TodoRepository) repository:Repository<Todo>
+    ) {
+        this.repository = repository;
+    }
+    public getTodos(): Promise<Todo[]> {
+        return this.repository.find();
     }
 
     public getTodoById(id: string): ITodo {

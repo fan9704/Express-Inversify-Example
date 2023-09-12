@@ -2,9 +2,9 @@ import {
     controller, httpGet, httpPost, httpPut, httpDelete
 } from 'inversify-express-utils';
 import { inject } from 'inversify';
-import { ITodo, TodoService } from '../service/todo';
+import { ITodo, TodoService } from '../services';
 import { Request } from 'express';
-import { TYPES } from '../constant/types';
+import { TYPES } from '../constant';
 
 @controller('/api/todo')
 export class TodoController {
