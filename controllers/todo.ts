@@ -1,18 +1,25 @@
 import {
     controller, httpGet, httpPost, httpPut, httpDelete
 } from 'inversify-express-utils';
-import { inject } from 'inversify';
+import {inject, injectable} from 'inversify';
 import { ITodo, TodoService } from '../services';
 import { Request } from 'express';
 import { TYPES } from '../constant';
-
+import {Todo} from "../entities";
+import {Get, Route, Tags} from "tsoa";
+import {Controller} from "@tsoa/runtime";
+import {fluentProvide} from "inversify-binding-decorators";
+@Route("todo")
 @controller('/api/todo')
-export class TodoController {
+export class TodoController extends Controller{
 
-    constructor(@inject(TYPES.TodoService) private todoService: TodoService) { }
+    constructor(@inject(TYPES.TodoService) private todoService: TodoService) {
+        super();
+    }
 
     @httpGet('/')
-    public getTodos(): ITodo[] {
+    @Get("/")
+    public getTodos(): Promise<Todo[]> {
         return this.todoService.getTodos();
     }
 

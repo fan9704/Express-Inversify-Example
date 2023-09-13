@@ -2,7 +2,7 @@ import {inject} from 'inversify';
 import {TYPES} from "../constant/types";
 import { provide } from 'inversify-binding-decorators';
 import {Repository} from "typeorm";
-import {Todo} from "../entities/todo";
+import {Todo} from "@/entities";
 
 export interface ITodo {
     id: String,

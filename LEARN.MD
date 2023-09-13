@@ -71,3 +71,62 @@ npm install inversify inversify-binding-decorators inversify-express-utils inver
 ```shell
 npm install typeorm pg 
 ```
+
+----
+
+## tsoa
+
+### Install Dependencies
+
+```shell
+npm install tsoa
+```
+
+### Configure tsoa.json
+
+```json
+{
+  "entryFile": "src/app.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/**/*Controller.ts"],
+  "spec": {
+    "outputDirectory": "build",
+    "specVersion": 3
+  },
+  "routes": {
+    "routesDir": "build"
+  }
+}
+```
+
+### Register Route on Controller
+
+```typescript
+@Route("todo")
+@controller('/api/todo')
+export class TodoController {
+}
+```
+
+### Generate Route
+
+```shell
+tsoa routes
+```
+
+### Register to Application
+
+> app.ts
+```typescript
+import { RegisterRoutes } from "./build/routes";
+app.setConfig((theApp) => {
+    theApp.use(bodyParser.urlencoded({
+        extended: true
+    }));
+    theApp.use(bodyParser.json());
+    // theApp.use(helmet());
+
+    //Register Swagger
+    RegisterRoutes(theApp);
+});
+```

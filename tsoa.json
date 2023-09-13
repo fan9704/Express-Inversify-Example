@@ -1,0 +1,24 @@
+{
+  "basePath": "/",
+  "entryFile": "./app.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["controllers/*.ts"],
+  "spec": {
+    "outputDirectory": "./",
+    "specVersion": 3,
+    "contact": {
+      "email": "gangtingfan02074@gmail.com",
+      "name": "FKT"
+    },
+    "host": "localhost:3000"
+  },
+  "routes": {
+    "routesDir": "build"
+  },
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": "*"
+    }
+  }
+}
