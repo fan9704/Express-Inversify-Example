@@ -1,16 +1,18 @@
 import {
     controller, httpGet, httpPost, httpPut, httpDelete
 } from 'inversify-express-utils';
-import {inject, injectable} from 'inversify';
+import {inject} from 'inversify';
 import { ITodo, TodoService } from '../services';
 import { Request } from 'express';
 import { TYPES } from '../constant';
 import {Todo} from "../entities";
-import {Get, Route, Tags} from "tsoa";
+import {Get, Route, Path, Post,Body,Tags} from "tsoa";
 import {Controller} from "@tsoa/runtime";
-import {fluentProvide} from "inversify-binding-decorators";
-@Route("todo")
+import {TodoDTO} from "../dto";
+
+@Route("/api/todo")
 @controller('/api/todo')
+@Tags("Todo")
 export class TodoController extends Controller{
 
     constructor(@inject(TYPES.TodoService) private todoService: TodoService) {
@@ -24,13 +26,15 @@ export class TodoController extends Controller{
     }
 
     @httpGet('/:id')
-    public getTodo(request: Request): ITodo {
-        return this.todoService.getTodoById(request.params.id);
+    @Get("/{id}")
+    public async getTodo( @Path('id') id: number): Promise<Todo|null> {
+        return this.todoService.getTodoById(id);
     }
 
     @httpPost('/')
-    public newUser(request: Request): ITodo {
-        return this.todoService.newTodo(request.body);
+    @Post("/")
+    public async newTodo(@Body() form:TodoDTO): Promise<Todo> {
+        return this.todoService.createTodo(form);
     }
 
     @httpPut('/:id')

@@ -10,7 +10,8 @@
       "email": "gangtingfan02074@gmail.com",
       "name": "FKT"
     },
-    "host": "localhost:3000"
+    "host": "localhost:3000",
+    "schemes": ["http"]
   },
   "routes": {
     "routesDir": "build"

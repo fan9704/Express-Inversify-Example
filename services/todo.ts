@@ -3,6 +3,7 @@ import {TYPES} from "../constant/types";
 import { provide } from 'inversify-binding-decorators';
 import {Repository} from "typeorm";
 import {Todo} from "@/entities";
+import {TodoDTO} from "@/dto";
 
 export interface ITodo {
     id: String,
@@ -32,10 +33,14 @@ export class TodoService {
         return this.repository.find();
     }
 
-    public getTodoById(id: string): ITodo {
-        return <ITodo>this.todoStorage.find(todo => todo.id === id);
+    public getTodoById(id: number): Promise<Todo|null> {
+        return this.repository.findOneBy(id==id);
     }
 
+    public async createTodo(form:Partial<Todo>):Promise<Todo>{
+        const todo = this.repository.create(form);
+        return await this.repository.save(todo) ;
+    }
     public newTodo(todo: ITodo): ITodo {
         this.todoStorage.push(todo);
         return todo;

@@ -10,6 +10,22 @@
 				"properties": {},
 				"type": "object",
 				"additionalProperties": false
+			},
+			"TodoDTO": {
+				"properties": {
+					"description": {
+						"type": "string"
+					},
+					"complete": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"description",
+					"complete"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -24,7 +40,7 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/todo": {
+		"/api/todo": {
 			"get": {
 				"operationId": "GetTodos",
 				"responses": {
@@ -42,14 +58,84 @@
 						}
 					}
 				},
+				"tags": [
+					"Todo"
+				],
 				"security": [],
 				"parameters": []
+			},
+			"post": {
+				"operationId": "NewTodo",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Todo"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Todo"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TodoDTO"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/todo/{id}": {
+			"get": {
+				"operationId": "GetTodo",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/Todo"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Todo"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		}
 	},
 	"servers": [
 		{
-			"url": "https://localhost:3000/"
+			"url": "http://localhost:3000/"
 		}
 	]
 }
